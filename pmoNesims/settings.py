@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'pmoSystem.urls'
+ROOT_URLCONF = 'pmoNesims.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pmoSystem.wsgi.application'
+WSGI_APPLICATION = 'pmoNesims.wsgi.application'
 
 
 # Database
