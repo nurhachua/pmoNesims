@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content-wrapper">
+   <div class="container-fluid">
+      <section class="content-header">
+         <h1>
+            Live Update
+         </h1>
+      </section>
+      <!-- Breadcrumbs -->
+      <ol class="breadcrumb">
+         <li class="breadcrumb-item">
+            <a href="home">Home</a>
+         </li>
+         <li class="breadcrumb-item active">Crisis Live Update</li>
+      </ol>
+      <div class="row">
+         <!-- Left col -->
+         <!-- TABLE: LATEST ORDERS -->
+         <div class="box box">
+            <div class="box-header with-border">
+               <h3 class="box-title">Crisis Live Update</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+               <!-- Example Tables Card -->
+               <div class="card mb-3">
+                  <div class="card-header">
+                     <!--<i class="fa fa-tv"></i>-->
+                  </div>
+                  <div class="card-body">
+                     <iframe
+                        width="600"
+                        height="450"
+                        frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBAXyhoXfWQMo7cIkfHKcDTzoOwLaFOY0A
+                        &q=Space+Needle,Seattle+WA" allowfullscreen>
+                     </iframe>
+                  </div>
+                  <div class="card-footer small text-muted">
+                     Updated: {{ updateTime }}
+                  </div>
+               </div>
+            </div>
+            <!-- /.container-fluid -->
+         </div>
+      </div>
+   </div>
+</div>
+<!-- /.box-body -->
+</div>
+</div>
+<!-- /.content-wrapper -->
+{% endblock %}

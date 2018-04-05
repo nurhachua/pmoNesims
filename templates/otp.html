@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<script>
+	function otpAuth() {
+		var otp = document.getElementById("otp").value;
+
+		$.ajax({
+
+			type: 'POST', //GET or POST or PUT or DELETE verb
+
+			url: '/otpAuthentication/', // Location of the service
+
+			data: {
+				'otp' : otp,
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			}, //Data sent to server
+			success: function (msg) {
+				//On Successfull service call
+				location.href="/home/"
+			},
+				error: function(msg){
+				alert("Invalid OTP"); // <- this should run if user is not activated
+			} // error
+		});
+	}
+	function resendOTP() {
+		$.ajax({
+
+			type: 'POST', //GET or POST or PUT or DELETE verb
+
+			url: '/resendOTP/', // Location of the service
+data: {
+				
+				csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+			}
+			
+		});
+	}
+	</script>
+<head>
+	<title>PMONESIMS</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/static/login/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/login/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/login/fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/login/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/static/login/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/login/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/login/vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/static/login/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/static/login/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/static/login/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url("{% static 'login/images/bg-01.jpg' %}");">
+			<div class="wrap-login100">
+				<form method="POST">
+					{% csrf_token %}
+					Hello, {% for i in minName %}
+								{{i.minister_name}}
+							{% endfor %}
+							<br/>
+							<hr/>
+							A One-Time Password (OTP) has been sent to your registered E-mail address. Please enter your OTP in the space provided.
+							<hr/>
+							<br/>
+							OTP : <input type="text" id="otp" name="otp" ></form>
+							<button onclick="otpAuth()" >Login</button><br/>
+							<button onclick="resendOTP()">Resend OTP</button>
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+
+{% block javascript %}
+<!--===============================================================================================-->
+	<script src="/static/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/login/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/login/vendor/bootstrap/js/popper.js"></script>
+	<script src="/static/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/login/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/login/vendor/daterangepicker/moment.min.js"></script>
+	<script src="/static/login/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/login/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+	<script src="/static/login/js/main.js"></script>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-storage.js"></script>
+
+<script>
+  // Initialize Firebase
+
+  var config = {
+    apiKey: "AIzaSyB6Krmsq2qeDj2G7rNJZkFsiGZmYytDQnM",
+    authDomain: "pmonesims.firebaseapp.com",
+    databaseURL: "https://pmonesims.firebaseio.com",
+    projectId: "pmonesims",
+    storageBucket: "pmonesims.appspot.com",
+    messagingSenderId: "1024527895183"
+  };
+  var fb=firebase.initializeApp(config);
+  
+
+
+</script>
+<script>
+
+
+var email="{{email}}";
+var passw="{{passw}}";
+
+fb.auth().signInWithEmailAndPassword(email, passw).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  alert(errorMessage);
+  // ...
+});
+//console.log(user2);
+    
+</script>
+<script src="{% static 'crisisChat.js'%}"></script>
+
+
+<link rel="manifest" href="{% static 'manifest.json' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="{% static 'chat.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+{%for ccCrisis in cCrisis%}
+{%for sstatusRep in statusEval%}
+      <h1>
+      Current Crisis: {{ccCrisis.crisisName}}
+    
+	  
+	  
+   </section>
+   
+		<!-- Breadcrumbs -->
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a href="../home">Home</a>
+			</li>
+			<li class="breadcrumb-item active">Current Crisis: {{ccCrisis.crisisName}}</li>
+		</ol>
+   <!-- Main row -->
+   <div class="row">
+      <!-- Left col -->
+      <div class="col-md-8">
+         <!-- TABLE: LATEST ORDERS -->
+         <div class="box box-info">
+            <div class="box-header with-border">
+               <h3 class="box-title"> Current Crisis</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+	
+		
+          <form method="POST">
+		     {% csrf_token %}
+             
+		 <div class="form-row">
+		
+		 <label for="caseName" class="col-form-label col-md-2 text-left">Case Name:</label>
+			<div class="form-group col-md-3">
+				<input type="text" class="form-control" name="inputCaseName" value="{{ccCrisis.crisisName}}" readonly > 
+			</div>
+				
+                     <label for="location" class="col-form-label col-md-3 text-right">Location</label>
+                     <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="txtLocation" value="{{sstatusRep.locationDispatched}}" readonly>
+                     </div>
+                  </div>
+				  
+				  <div class="form-row">
+
+                     <label for="caseStatus" class="col-form-label col-md-2 text-left">Case Status:</label>
+					 <div class="form-group col-md-3">
+					 <input type="text" class="form-control" name="inputCaseStatus"  value="{{sstatusRep.crisisStatus}}" readonly> 
+					 </div>
+                     <label for="emergencyLevel" class="col-form-label col-md-3 text-right">Emergency Level</label>
+                     <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="txtEmergencyLevel" value="{{ccCrisis.emergencyLevel}}" readonly >
+                     </div>
+                  </div>
+				  <div class="form-row">
+
+                     <label for="caseStatusID" class="col-form-label col-md-2 text-left">Status ID:</label>
+					 <div class="form-group col-md-3">
+					 <input type="text" class="form-control" name="StatusID"  value="{{sstatusRep.statRepID}}" readonly> 
+					 </div>
+                     <label for="latitude" class="col-form-label col-md-3 text-right">Latitude Coordinates</label>
+                     <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="txtLatitude" value="{{sstatusRep.latitude}}" readonly >
+                     </div>
+                  </div>
+				  <div class="form-row">
+
+                     <label for="longtitude" class="col-form-label col-md-2 text-left">Longtitude Coordinates</label>
+					 <div class="form-group col-md-3">
+					 <input type="text" class="form-control" name="txtLongtitude"  value="{{sstatusRep.longitude}}" readonly> 
+					 </div>
+					   <label for="AreaAffected" class="col-form-label col-md-3 text-right">Area Affected:</label>
+                     <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="txtAreaAffected" readonly value="{{sstatusRep.areaAffected}}" >
+                     </div>
+                  
+                  </div>
+                  <div class="form-row">
+                     <label for="caseID" class="col-form-label col-md-2 text-left">Case ID</label>
+                     <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="inputCaseID" value="{{ccCrisis.caseID}}" readonly >
+                        <script>
+                          var cID='{{i.caseID}}';
+                        </script>
+                     </div>
+					   <label for="cPlanID" class="col-form-label col-md-3 text-right">Plan ID:</label>
+                     <div class="form-group col-md-3">
+                        <input type="text" class="form-control" name="inputPlanID"  id="inputPlanID"readonly="true" value="{{ccCrisis.planID}}" >
+						
+                     </div>
+                   
+                  </div>
+			    <div class="clearfix"></div>
+                  <div class="form-group">
+				    <label for="CrisisDateTime" class="col-form-label col-md-2 text-left">Crisis Reported Date/Time:</label>
+                     <div class="form-group col-md-9">
+                        <input type="text" class="form-control" name="txtCrisisDateTime" readonly value="{{ccCrisis.crsisDateTime}}" >
+                     </div>
+				  
+				  
+                	    <div class="clearfix"></div>
+                  </div>
+				   <div class="form-group">
+                     <label for="crisisStatusDesc" class="col-sm-2 control-label">Status Description:</label>
+                     <div class="col-sm-9">
+                        <textarea class="form-control" rows="5" name="txtStatusDescription" value="" readonly >{{sstatusRep.statusDescription}}</textarea>
+                     </div>
+                  </div>
+				
+				    <div class="clearfix"></div>
+				  <div class="form-row">
+                  <div class="form-group">
+                     <label for="crisisDesc" class="col-sm-2 control-label">Crisis Description:</label>
+                     <div class="col-sm-9">
+                        <textarea class="form-control" rows="5" name="txtCrisisDescription" value="" readonly >{{ccCrisis.crisisDescription}}</textarea>
+                     </div>
+                  </div>
+				     </div>
+				    <div class="clearfix"></div>
+      
+                  <div class="clearfix"></div>
+				    <div class="form-row">
+                  <div class="form-group">
+                     <label for="planDesc" class="col-sm-2 control-label">Plan Description:</label>
+                     <div class="col-sm-9">
+                        <textarea class="form-control" rows="5" name="txtPlanDescription"  readonly >{{ccCrisis.planDescription}}</textarea>
+                     </div>
+                  </div>
+				     </div>
+				{%endfor%}
+			{%endfor%}
+					  <div class="form-group">
+                   
+                     <div class="col-sm-9">
+					 				   {% for u in ut %}
+                        <textarea class="form-control" rows="5" name="txtUType" hidden >{{u.user_type}}</textarea>
+								{% endfor %}
+                     </div>
+					
+                  </div>
+				  
+				  	  {%for ccurrentUserType in currentUserType%}
+				{% if ccurrentUserType.user_type == "pm" %}
+                  <div class="clearfix"></div>
+                  <h4 class="reportHeader"> Review Crisis Report </h4>
+                  <u>
+                     <b>
+                        <h5 class="reportHeader"> Other Ministers Comments and Approval </h5>
+                     </b>
+                  </u>
+                  <div class="table-responsive">
+                     <table class="table no-margin">
+                        <thead>
+                           <tr>
+                              <th>Minister Name</th>
+                              <th>Approve/Reject</th>
+                              <th>Comments</th>
+                              <th>Date</th>
+                           </tr>
+                        </thead>
+                     	<tbody>
+				{%for ccCrisis in cCrisis%}
+					{% for i in allUserTypes %}
+						<tr>
+							<td>{{i.minister_name}}</td>
+								{% for p in planEval %}
+									{% if i.user_type == p.user_type_id %}
+										{% if p.planID_id == ccCrisis.planID %}
+											{% if p.authorizationStatus == "Approved" %}
+												<td><span class="label label-success">Approved</span></td>
+											{% endif %}
+											{% if p.authorizationStatus == "Pending" %}
+												<td><span class="label label-warning">Pending</span></td>
+											{% endif %}
+											{% if p.authorizationStatus == "Rejected" %}
+												<td><span class="label label-danger">Rejected</span></td>
+											{% endif %}
+											<td>{{p.eval_comment}}</td>
+											<td>{{p.eval_dateTime}}</td>											
+										{%endif%}
+									{%endif%}
+								{%endfor%}
+							{%endfor%}
+						</tr>
+					{% endfor %}
+				</tbody>
+                     </table>
+                  </div>
+				     {% else %}
+				      <!--   <form method="POST">-->
+			
+				 <div class="clearfix"></div>
+                  <div class="form-group">
+                     <label for="minComment" class="col-sm-2 control-label"> Other Minister Comment:</label>
+                     <div class="col-sm-9">
+                        <textarea class="form-control" rows="5" name="txtMinComment" ></textarea>
+                     </div>
+					
+                  </div>
+		            {% endif %}
+                    {% endfor %}
+		
+				  
+		        <div class="form-row">
+            {% for z in decisionTable %}
+            <img class="img-responsive" src="{{z.decisionTable}}" alt = "image" width="600" height="250"/>
+            {% endfor %}
+					</div>
+					
+					 
+                  <div class="form-row">
+                     <!-- Button (Double) -->
+                     <div class="form-group" id="apprej">
+                        <label class="col-md-4 control-label" for="approvereject"></label>
+                        <div class="col-md-8">
+                           <button type="submit" name="approve"  class="btn btn-success" id="approve" value="Approved">Approve</button>
+						   
+						    {% for e in currentUserType %}
+					    {% if e.user_type == "pm" %}
+						   {% for p in cCrisis %}
+                           <!-- <button type="submit" name="reject" class="btn btn-danger" id="rej" value="Rejected">Rejected</button> -->
+					 <a href="/justification?caseID={{p.caseID}}" class="btn btn-danger" id="pmRej"value="Rejected">Rejected</a>
+							    {% endfor %}
+								{% else %}
+								  <button type="submit" name="reject" class="btn btn-danger" id="rej" value="Rejected">Rejected</button>
+						 <!-- <a href="/justification" class="btn btn-danger" value="Rejected">Reject</a> -->
+                                     {% endif %}
+                    {% endfor %}
+						</div>
+                     </div>
+                  </div>
+
+               </form>
+            </div>
+         </div>
+         <!-- /.box-body -->
+      </div>
+      <!-- /.col -->
+      <div class="col-md-4">
+         <!-- DIRECT CHAT -->
+         <div class="box box-warning direct-chat direct-chat-warning">
+            <div class="box-header with-border">
+               <h3 class="box-title">Case Number <script>document.write(cID);</script></h3>
+               <div class="box-tools pull-right">
+                  <span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+            
+               </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+        
+        
+                                
+               <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid" style="height: 500px; width: 500px;">
+
+      <!-- Messages container -->
+      <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop" style="width:300px;height: 400px;">
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          <div id="messages">
+            <span id="message-filler"></span>
+          </div>
+          <form id="message-form" action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+
+              <input type="text"class="mdl-textfield__input"  id="message">
+              <label class="mdl-textfield__label" for="message">Message...</label>
+            </div>
+            <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+              Send
+            </button>
+          </form>
+          <form id="image-form" action="#">
+            <input id="mediaCapture" type="file" accept="image/*,capture=camera">
+            <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+              <i class="material-icons">image</i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+      </div>
+
+    </div>
+      
+           
+                 
+    
+            <!-- /.box-body -->
+    
+            <!-- /.box-footer-->
+         </div>
+         <!--/.direct-chat -->
+         <!-- Info Boxes Style 2 -->
+         <!-- /.box -->
+         <!-- /.box -->
+      </div>
+    <div class="col-md-4" style="width:350px; height:300px">
+         <!-- DIRECT CHAT -->
+         <div class="box box-warning direct-chat direct-chat-warning">
+            <div class="box-header with-border">
+               <h3 class="box-title">Crisis Map</h3>
+               <div class="box-tools pull-right">
+                  <span data-toggle="tooltip" title="3 New Messages" class="badge bg-yellow">3</span>
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contacts"
+                     data-widget="chat-pane-toggle">
+                  <i class="fa fa-comments"></i></button>
+                  <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                  </button>
+               </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="width:300px; height:300px">
+              <style>
+       #map {
+        height: 300px;
+        width: 300px;
+       }
+    </style>
+<script>
+  
+      function addMarkers(){
+      
+        {% for statusRep in statusFull %}
+          
+         
+         var newPos=new google.maps.LatLng('{{statusRep.latitude}}','{{statusRep.longitude}}');
+          var markers=new google.maps.Marker({
+              position:newPos,
+              map:map
+              
+          });
+    
+          markers.addListener('click', function(){
+            //console.log("{{statusRep.statRepID}}");
+             var infowindow = new google.maps.InfoWindow({
+    content: "<div> Crisis ID : {{statusRep.statRepID}}</div>",
+   
+  });
+            infowindow.open(map,this);
+ 
+          });
+          {% endfor %}
+      }
+
+
+      function initMap() {
+      var latlng = new google.maps.LatLng(1.3521,103.8198);
+       
+         map = new google.maps.Map(document.getElementById('map'), {
+  center: latlng,
+  zoom: 12
+});
+      
+      }
+    
+    </script>
+     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEKLgwo0NwWHWa_m8QXmla-ll5NdM0U7Y&callback=initMap">
+    </script>
+               <div id="map"> </div>
+
+                   
+            </div> <button onclick="addMarkers()"> Retrieve Points</button>
+            <!-- /.box-body -->
+            <!-- /.box-footer-->
+         </div>
+         <!--/.google map -->
+         <!-- Info Boxes Style 2 -->
+         <!-- /.box -->
+         <!-- /.box -->
+      </div>
+	  
+
+      <!-- /.col -->
+   </div>
+   <!-- /.row -->
+   </section>
+   <!-- /.content -->
+</div>
+</div>
+<!-- /.content-wrapper -->
+<script>
+var flag='{{flag}}';
+console.log(flag);
+if(flag=="True"){
+document.getElementById("approve").disabled=true;
+document.getElementById("rej").disabled=true;
+document.getElementById("pmRej").disabled=true;
+}</script>
+{% endblock %}
+
